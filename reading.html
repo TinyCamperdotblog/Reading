@@ -1,0 +1,32 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+body { font-family: system-ui, sans-serif; font-size: 15px; }
+li { margin: 0.4em 0; }
+</style>
+</head>
+<body>
+<ul id="list">Loading…</ul>
+
+<script>
+fetch("https://bookwyrm.social/user/TinyCamper/rss")
+  .then(r => r.text())
+  .then(x => new DOMParser().parseFromString(x, "text/xml"))
+  .then(xml => {
+    const items = [...xml.querySelectorAll("item")]
+      .filter(i => i.textContent.toLowerCase().includes("currently reading"));
+
+    const ul = document.getElementById("list");
+    ul.innerHTML = "";
+
+    items.forEach(i => {
+      const t = i.querySelector("title").textContent;
+      const l = i.querySelector("link").textContent;
+      ul.innerHTML += `<li><a href="${l}" target="_blank">${t}</a></li>`;
+    });
+  });
+</script>
+</body>
+</html>
