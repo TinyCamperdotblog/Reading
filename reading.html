@@ -11,7 +11,7 @@ li { margin: 0.4em 0; }
 <ul id="list">Loading…</ul>
 
 <script>
-fetch("https://bookwyrm.social/user/TinyCamper/rss")
+fetch("https://bookwyrm.social/user/TinyCamper/books/reading")
   .then(r => r.text())
   .then(x => new DOMParser().parseFromString(x, "text/xml"))
   .then(xml => {
